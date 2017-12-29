@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver">
+		</property>
+		<property name="url"
+			value="jdbc:mysql://127.0.0.1:3306/hibernatedb?useUnicode=true&amp;characterEncoding=UTF-8">
+		</property>
+		<property name="username" value="root"></property>
+		<property name="password" value="19971112xx"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>entity/Bargain.hbm.xml</value>
+				<value>entity/Book.hbm.xml</value>
+				<value>entity/Manager.hbm.xml</value>
+				<value>entity/Orders.hbm.xml</value>
+				<value>entity/Recommended.hbm.xml</value>
+				<value>entity/Sex.hbm.xml</value>
+				<value>entity/Type.hbm.xml</value>
+				<value>entity/User.hbm.xml</value>
+				<value>entity/Ordersbook.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="personManage" class="daoImp.PersonManage" abstract="false"
+		lazy-init="default" autowire="default">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="bookManage" class="daoImp.BookManage" abstract="false"
+		lazy-init="default" autowire="default">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ordersManage" class="daoImp.OrdersManage" abstract="false"
+		lazy-init="default" autowire="default">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="LeftAction" class="action.LeftAction" scope="prototype">
+		<property name="bookManage">
+			<ref bean="bookManage" />
+		</property>
+	</bean>
+	<bean id="AllBookAction" class="action.AllBookAction" scope="prototype">
+		<property name="bookManage">
+			<ref bean="bookManage" />
+		</property>
+	</bean>
+	<bean id="LoginAction" class="action.LoginAction" scope="prototype">
+		<property name="personManage">
+			<ref bean="personManage" />
+		</property>
+	</bean>
+	<bean id="EnrollAction" class="action.EnrollAction" scope="prototype">
+		<property name="personManage">
+			<ref bean="personManage" />
+		</property>
+	</bean>
+	<bean id="OneTypeAction" class="action.OneTypeAction" scope="prototype">
+		<property name="bookManage">
+			<ref bean="bookManage" />
+		</property>
+	</bean>
+	<bean id="SingleBookAction" class="action.SingleBookAction" scope="prototype">
+		<property name="bookManage">
+			<ref bean="bookManage" />
+		</property>
+	</bean>
+	<bean id="ShoppingCartAction" class="action.ShoppingCartAction"
+		scope="prototype">
+		<property name="bookManage">
+			<ref bean="bookManage" />
+		</property>
+	</bean>
+
+	<bean id="UpdateCartAction" class="action.UpdateCartAction" scope="prototype">
+	</bean>
+
+	<bean id="OrdersManageAction" class="action.OrdersManageAction"
+		scope="prototype">
+		<property name="ordersManage">
+			<ref bean="ordersManage" />
+		</property>
+	</bean>
+
+	<bean id="OrdersAction" class="action.OrdersAction" scope="prototype">
+		<property name="ordersManage">
+			<ref bean="ordersManage" />
+		</property>
+	</bean>
+	<bean id="SingleOrdersAction" class="action.SingleOrdersAction"
+		scope="prototype">
+		<property name="bookManage">
+			<ref bean="bookManage" />
+		</property>
+		<property name="ordersManage">
+			<ref bean="ordersManage" />
+		</property>
+	</bean>
+	<bean id="UserManageAction" class="action.UserManageAction" scope="prototype">
+		<property name="personManage">
+			<ref bean="personManage" />
+		</property>
+	</bean>
+	<bean id="UserInformationAction" class="action.UserInformationAction"
+		scope="prototype">
+		<property name="personManage">
+			<ref bean="personManage" />
+		</property>
+	</bean>
+	<bean id="UserExitAction" class="action.UserExitAction" scope="prototype">
+	</bean>
+
+	<bean id="BookAction" class="action.BookAction" scope="prototype">
+		<property name="bookManage">
+			<ref bean="bookManage" />
+		</property>
+	</bean>
+	<bean id="AllOrdersAction" class="action.AllOrdersAction" scope="prototype">
+		<property name="ordersManage">
+			<ref bean="ordersManage" />
+		</property>
+	</bean>
+	<bean id="UpdateBookAction" class="action.UpdateBookAction" scope="prototype">
+		<property name="bookManage">
+			<ref bean="bookManage" />
+		</property>
+	</bean>
+</beans>
