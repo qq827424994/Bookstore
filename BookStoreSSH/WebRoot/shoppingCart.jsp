@@ -21,10 +21,10 @@
 		<div id="shoppingCart">
 		
 			<div id="shoppingBook" style="padding-top: 20px;padding-left: 8px;">
-				<ul class="shoppingBookUl">
+				<ul style="width=700px">
 					<li class="shoppingBookHead">我的购物车</li>
 				</ul>
-				<ul class="shoppingBookUl" style="background-color: yellow;">
+				<ul  >
 					<li class="sequence">序列</li>
 					<li class="bookName">图书名称</li>
 					<li class="bookPrice">图书价格</li>
@@ -33,7 +33,7 @@
 				</ul>
 				<s:if test="%{#session.shoppingBook != null}">
 					<s:iterator value="#session.shoppingBook" status="st">
-						<ul class="shoppingBookUl">
+						<ul  style="float:left">
 							<li class="sequence">
 								<s:property value="#st.getIndex()+1"/>
 							</li>
@@ -49,7 +49,7 @@
 						</ul>
 					</s:iterator>
 					<ul class="shoppingBookUl">
-						<li class="shoppingBookHead">
+						<li style="float:none">
 						<s:if test="%{#session.shoppingBook.size() > 0}">
 							<input type="button" value="确定购买" onclick="addOrders()">
 						</s:if>

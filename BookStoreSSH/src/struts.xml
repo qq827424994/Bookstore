@@ -21,9 +21,7 @@
 			<result name="success" type="redirect">/firstPage.jsp</result>
 		</action>
 
-		<action name="leftAction" class="LeftAction">
-		</action>
-
+	
 		<action name="allBookAction" class="AllBookAction">
 		</action>
 
@@ -95,6 +93,9 @@
 
 		<action name="allOrdersAction" class="AllOrdersAction">
 		
+		</action>
+		<action name="dealOrdersAction" class="DealOrdersAction">
+	 	<result name="success" type="redirect">/manage/manageAllOrders.jsp</result>
 		</action>
 
 		<action name="updateBookAction" class="UpdateBookAction">

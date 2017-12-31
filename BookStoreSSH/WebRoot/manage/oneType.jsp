@@ -10,7 +10,7 @@
     <center>
     	<jsp:include page="top.jsp"></jsp:include>
 		<div id="managePage">
-			<div id="left">
+			<div id="left"  style="float:left">
 				<jsp:include page="manageLeft.jsp"></jsp:include>
 			</div>
 			<div id="oneType">

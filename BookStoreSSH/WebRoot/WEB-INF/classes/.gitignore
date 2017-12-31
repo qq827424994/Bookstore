@@ -6,4 +6,6 @@
 /filter
 /globalMessages_zh_CN.properties
 /interceptor
+/service
+/serviceImp
 /struts.xml

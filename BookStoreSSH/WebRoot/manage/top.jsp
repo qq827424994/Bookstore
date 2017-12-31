@@ -23,7 +23,7 @@ body{
 				<font style="color:green;font-weight: bold">
 					 <s:property value="#session.managerLoginName"/>
 				</font>
-				您好！欢迎光临浙江工业大学奇点网上书店 <a href="../com.huizhi.action/userExitAction.action?userType=manager">安全退出</a>
+				您好！欢迎光临网上书店 <a href="../com.huizhi.action/userExitAction.action?userType=manager">安全退出</a>
 			</div>
 			<hr/>
 		</div>

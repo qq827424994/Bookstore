@@ -12,8 +12,9 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 @SuppressWarnings("serial")
 public class ManagerLoginCheck extends AbstractInterceptor{
 
-	@SuppressWarnings("unchecked")
+	
 	public String intercept(ActionInvocation ai) throws Exception {
+		@SuppressWarnings("rawtypes")
 		Map session = ai.getInvocationContext().getSession();
 		String managerName = (String)session.get("managerLoginName");
 		HttpServletRequest request = ServletActionContext.getRequest();

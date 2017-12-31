@@ -3,22 +3,23 @@ package action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.struts2.ServletActionContext;
+
+import service.IBookBargainService;
+import service.IFindBookService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import java.util.*;
+
 import entity.*;
-import dao.*;
-import daoImp.BookManage;
 
 @SuppressWarnings("serial")
 public class ShoppingCartAction extends ActionSupport {
-	private BookManage bookManage;
+	private IFindBookService findbookservice;
+	private IBookBargainService bookbargainservice;
 
-	public void setBookManage(BookManage bookManage) {
-		this.bookManage = bookManage;
-	}
 
 	@SuppressWarnings("unchecked")
 	public String execute() {
@@ -40,10 +41,10 @@ public class ShoppingCartAction extends ActionSupport {
 		}
 		if (i == 0) 
 		{
-			Book book = bookManage.findBook(Integer.parseInt(bookId));
+			Book book =findbookservice.findBook(Integer.parseInt(bookId));
 			book.setBookAmount(1);
 			Bargain bargain = null;
-			bargain = bookManage.isBargain(Integer.parseInt(bookId));
+			bargain =bookbargainservice.isBargain(Integer.parseInt(bookId));
 			if (bargain != null) {
 				book.setBookPrice(bargain.getBookNewPrice());
 			}
@@ -66,5 +67,25 @@ public class ShoppingCartAction extends ActionSupport {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+
+	public IFindBookService getFindbookservice() {
+		return findbookservice;
+	}
+
+
+	public void setFindbookservice(IFindBookService findbookservice) {
+		this.findbookservice = findbookservice;
+	}
+
+
+	public IBookBargainService getBookbargainservice() {
+		return bookbargainservice;
+	}
+
+
+	public void setBookbargainservice(IBookBargainService bookbargainservice) {
+		this.bookbargainservice = bookbargainservice;
 	}
 }

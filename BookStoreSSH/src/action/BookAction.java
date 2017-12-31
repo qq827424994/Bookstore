@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
+import service.IAddBook;
+import service.IFindType;
+
 import com.opensymphony.xwork2.ActionSupport;
 
-import daoImp.BookManage;
 
 import entity.*;
 
@@ -27,13 +29,13 @@ public class BookAction extends ActionSupport {
 	private int typeId;
 	private int bookAmount;
 	private double bookPrice;
-	private BookManage bookManage;
-
 	private File doc;
 	private String fileName;
 	private String contentType;
 	private String dir;
 	private String targetFileName;
+	private IAddBook addbook;
+	private IFindType findtype;
 
 	public void setDoc(File file) {
 		this.doc = file;
@@ -137,9 +139,6 @@ public class BookAction extends ActionSupport {
 		this.bookPrice = bookPrice;
 	}
 
-	public void setBookManage(BookManage bookManage) {
-		this.bookManage = bookManage;
-	}
 
 	@SuppressWarnings("deprecation")
 	public String execute() throws UnsupportedEncodingException {
@@ -165,7 +164,7 @@ public class BookAction extends ActionSupport {
 		book.setBookRemark(bookRemark);
 		book.setBookPrice(bookPrice);
 		book.setBookAmount(bookAmount);
-		Type type = bookManage.findType(typeId);
+		Type type = findtype.findType(typeId);
 		book.setType(type);// Àà±ð
 		book.setBookSales(0);
 
@@ -177,7 +176,23 @@ public class BookAction extends ActionSupport {
 
 		book.setBookNumber(bookNumber);
 		book.setBookShelveTime(new Timestamp(new Date().getTime()));
-		bookManage.addBook(book);
+		addbook.addBook(book);
 		return page;
+	}
+
+	public IAddBook getAddbook() {
+		return addbook;
+	}
+
+	public void setAddbook(IAddBook addbook) {
+		this.addbook = addbook;
+	}
+
+	public IFindType getFindtype() {
+		return findtype;
+	}
+
+	public void setFindtype(IFindType findtype) {
+		this.findtype = findtype;
 	}
 }

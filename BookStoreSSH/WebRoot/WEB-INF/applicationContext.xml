@@ -40,6 +40,7 @@
 			</list>
 		</property>
 	</bean>
+	
 	<bean id="personManage" class="daoImp.PersonManage" abstract="false"
 		lazy-init="default" autowire="default">
 		<property name="sessionFactory">
@@ -58,41 +59,121 @@
 			<ref local="sessionFactory" />
 		</property>
 	</bean>
+  
+<bean id="enrollservice" class="serviceImp.EnrollService">
+     <property name="personManage">
+			<ref bean="personManage" />
+		</property>    
+</bean>
+<bean id="loginservice" class="serviceImp.LoginService">
+     <property name="personManage">
+			<ref bean="personManage" />
+		</property> 
+</bean>
+<bean id="userinfomationservice" class="serviceImp.UserInfomationService">
+     <property name="personManage">
+			<ref bean="personManage" />
+		</property> 
+</bean>
+<bean id="usermanageservice" class="serviceImp.UserManageService">
+     <property name="personManage">
+			<ref bean="personManage" />
+		</property> 
+</bean>
+<bean id="updatebookservice" class="serviceImp.UpdateBookService">
+     <property name="bookManage">
+			<ref bean="bookManage" />
+		</property> 
+</bean>
+<bean id="singleorderservice" class="serviceImp.SingleOrderService">
 
-	<bean id="LeftAction" class="action.LeftAction" scope="prototype">
-		<property name="bookManage">
+	<property name="ordersManage">
+			<ref bean="ordersManage" />
+	</property> 
+</bean>
+<bean id="bookbargainservice" class="serviceImp.BookBargainService">
+	<property name="bookManage">
 			<ref bean="bookManage" />
-		</property>
-	</bean>
+	</property> 
+</bean>
+<bean id="findbookservice" class="serviceImp.FindBookService">
+	<property name="bookManage">
+			<ref bean="bookManage" />
+	</property> 
+</bean>
+<bean id="ordermanageservice" class="serviceImp.OrderManageService">
+	<property name="ordersManage">
+			<ref bean="ordersManage" />
+	</property> 
+</bean>
+<bean id="allorderservice" class="serviceImp.AllOrdersService">
+	<property name="ordersManage">
+			<ref bean="ordersManage" />
+	</property> 
+</bean>
+<bean id="allbookservice" class="serviceImp.AllBookService">
+	<property name="bookManage">
+			<ref bean="bookManage" />
+	</property> 
+</bean>
+<bean id="typebookservice" class="serviceImp.TypeBookService">
+	<property name="bookManage">
+			<ref bean="bookManage" />
+	</property> 
+</bean>
+<bean id="findtype" class="serviceImp.FindType">
+	<property name="bookManage">
+			<ref bean="bookManage" />
+	</property> 
+</bean>
+<bean id="addbook" class="serviceImp.AddBook">
+	<property name="bookManage">
+			<ref bean="bookManage" />
+	</property> 
+</bean>
+
+
 	<bean id="AllBookAction" class="action.AllBookAction" scope="prototype">
-		<property name="bookManage">
-			<ref bean="bookManage" />
+		<property name="typebookservice">
+			<ref bean="typebookservice" />
 		</property>
 	</bean>
 	<bean id="LoginAction" class="action.LoginAction" scope="prototype">
-		<property name="personManage">
-			<ref bean="personManage" />
+		<property name="loginservice">
+			<ref bean="loginservice" />
 		</property>
 	</bean>
 	<bean id="EnrollAction" class="action.EnrollAction" scope="prototype">
-		<property name="personManage">
-			<ref bean="personManage" />
+		<property name="enrollService">
+			<ref bean="enrollservice" />
 		</property>
 	</bean>
 	<bean id="OneTypeAction" class="action.OneTypeAction" scope="prototype">
-		<property name="bookManage">
-			<ref bean="bookManage" />
+		<property name="allbookservice">
+			<ref bean="allbookservice" />
+		</property>
+		<property name="typebookservice">
+			<ref bean="typebookservice" />
+		</property>
+		<property name="findtype">
+			<ref bean="findtype" />
 		</property>
 	</bean>
 	<bean id="SingleBookAction" class="action.SingleBookAction" scope="prototype">
-		<property name="bookManage">
-			<ref bean="bookManage" />
+		<property name="bookbargainservice">
+			<ref bean="bookbargainservice" />
+		</property>
+		<property name="findbookservice">
+			<ref bean="findbookservice" />
 		</property>
 	</bean>
 	<bean id="ShoppingCartAction" class="action.ShoppingCartAction"
 		scope="prototype">
-		<property name="bookManage">
-			<ref bean="bookManage" />
+		<property name="bookbargainservice">
+			<ref bean="bookbargainservice" />
+		</property>
+		<property name="findbookservice">
+			<ref bean="findbookservice" />
 		</property>
 	</bean>
 
@@ -101,52 +182,60 @@
 
 	<bean id="OrdersManageAction" class="action.OrdersManageAction"
 		scope="prototype">
-		<property name="ordersManage">
-			<ref bean="ordersManage" />
+		<property name="ordermanageservice">
+			<ref bean="ordermanageservice" />
+		</property>
+	</bean>
+	<bean id="DealOrdersAction" class="action.DealOrdersAction"
+		scope="prototype">
+		<property name="ordermanageservice">
+			<ref bean="ordermanageservice" />
 		</property>
 	</bean>
 
 	<bean id="OrdersAction" class="action.OrdersAction" scope="prototype">
-		<property name="ordersManage">
-			<ref bean="ordersManage" />
+		<property name="allorderservice">
+			<ref bean="allorderservice" />
 		</property>
 	</bean>
-	<bean id="SingleOrdersAction" class="action.SingleOrdersAction"
-		scope="prototype">
-		<property name="bookManage">
-			<ref bean="bookManage" />
+	<bean id="SingleOrdersAction" class="action.SingleOrdersAction" scope="prototype">
+		<property name="singleorderservice">
+			<ref bean="singleorderservice" />
 		</property>
-		<property name="ordersManage">
-			<ref bean="ordersManage" />
+		<property name="bookbargainservice">
+			<ref bean="bookbargainservice" />
 		</property>
 	</bean>
 	<bean id="UserManageAction" class="action.UserManageAction" scope="prototype">
-		<property name="personManage">
-			<ref bean="personManage" />
+		<property name="usermanageservice">
+			<ref bean="usermanageservice" />
 		</property>
 	</bean>
 	<bean id="UserInformationAction" class="action.UserInformationAction"
 		scope="prototype">
-		<property name="personManage">
-			<ref bean="personManage" />
+		<property name="userinfomationservice">
+			<ref bean="userinfomationservice" />
 		</property>
 	</bean>
 	<bean id="UserExitAction" class="action.UserExitAction" scope="prototype">
 	</bean>
 
 	<bean id="BookAction" class="action.BookAction" scope="prototype">
-		<property name="bookManage">
-			<ref bean="bookManage" />
+		<property name="addbook">
+			<ref bean="addbook" />
+		</property>
+		<property name="findtype">
+			<ref bean="findtype" />
 		</property>
 	</bean>
 	<bean id="AllOrdersAction" class="action.AllOrdersAction" scope="prototype">
-		<property name="ordersManage">
-			<ref bean="ordersManage" />
+		<property name="allorderservice">
+			<ref bean="allorderservice" />
 		</property>
 	</bean>
 	<bean id="UpdateBookAction" class="action.UpdateBookAction" scope="prototype">
-		<property name="bookManage">
-			<ref bean="bookManage" />
+		<property name="updatebookservice">
+			<ref bean="updatebookservice" />
 		</property>
 	</bean>
 </beans>

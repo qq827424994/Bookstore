@@ -49,5 +49,6 @@ public interface BookDao {
 
 	// 查询图书是否为特价图书
 	public Bargain isBargain(int bookId);
+	
 
 }

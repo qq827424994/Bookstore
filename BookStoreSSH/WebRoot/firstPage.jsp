@@ -4,7 +4,7 @@
 <html>
 	<head>
 
-		<title>浙江工业大学奇点网上书店</title>
+		<title>网上书店</title>
 		<link rel="stylesheet" type="text/css" href="css/styles.css">
 
 	</head>

@@ -4,21 +4,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
+
+import service.IAllOrdersService;
+
 import com.opensymphony.xwork2.ActionSupport;
 
-import dao.*;
-import daoImp.OrdersManage;
 import entity.*;
+
 import java.util.*;
 
 @SuppressWarnings("serial")
 public class OrdersAction extends ActionSupport{
 
-	private OrdersManage ordersManage;
-
-	public void setOrdersManage(OrdersManage ordersManage) {
-		this.ordersManage = ordersManage;
-	}
+	private IAllOrdersService allorderservice;
 	
 	public String execute(){
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -30,17 +28,25 @@ public class OrdersAction extends ActionSupport{
 			searchType = "all";
 		}
 		if("all".equals(searchType)){
-			allOrdersByUser = ordersManage.allOrdersByUser(user.getUserId(), 1, 5);
+			allOrdersByUser = allorderservice.allOrdersByUser(user.getUserId(), 1, 5);
 		}
 		if("isDeal".equals(searchType)){
-			allOrdersByUser = ordersManage.allOrdersByUserDeal(user.getUserId(), "1", 1, 5);
+			allOrdersByUser = allorderservice.allOrdersByUserDeal(user.getUserId(), "1", 1, 5);
 		}
 		if("isNotDeal".equals(searchType)){
-			allOrdersByUser = ordersManage.allOrdersByUserDeal(user.getUserId(), "0", 1, 5);
+			allOrdersByUser = allorderservice.allOrdersByUserDeal(user.getUserId(), "0", 1, 5);
 		}
 		request.setAttribute("allOrdersByUser", allOrdersByUser);
 		int sequence = (1-1)*5;
 		request.setAttribute("sequence", sequence);
 		return null;
+	}
+
+	public IAllOrdersService getAllorderservice() {
+		return allorderservice;
+	}
+
+	public void setAllorderservice(IAllOrdersService allorderservice) {
+		this.allorderservice = allorderservice;
 	}
 }

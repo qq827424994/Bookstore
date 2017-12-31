@@ -4,40 +4,34 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
 
+import service.IBookBargainService;
+import service.ISingleOrderService;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import java.util.*;
-import dao.*;
-import daoImp.BookManage;
-import daoImp.OrdersManage;
+
+
 import entity.*;
 @SuppressWarnings("serial")
 public class SingleOrdersAction extends ActionSupport{
 	
-	private OrdersManage ordersManage;
-	private BookManage bookManage;
+	private ISingleOrderService singleorderservice;
+	private IBookBargainService bookbargainservice;
 	
-	public void setOrdersManage(OrdersManage ordersManage) {
-		this.ordersManage = ordersManage;
-	}
-
-	public void setBookManage(BookManage bookManage) {
-		this.bookManage = bookManage;
-	}
-
 	public String execute(){
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String ordersId = request.getParameter("ordersId");
 		int ordersIdInt = Integer.parseInt(ordersId);
 		Orders orders = new Orders();
-		orders = ordersManage.findOrders(ordersIdInt);
+		orders = singleorderservice.findOrders(ordersIdInt);
 		List<Ordersbook> allOrdersbookByOrders = new ArrayList<Ordersbook>();
-		allOrdersbookByOrders = ordersManage.allOrdersbookByOrders(ordersIdInt);
+		allOrdersbookByOrders = singleorderservice.allOrdersbookByOrders(ordersIdInt);
 		List<Book> bookList = new ArrayList<Book>();
 		for(Ordersbook ordersbook : allOrdersbookByOrders){
 			Book book = ordersbook.getBook();
 			Bargain bargain = null;
-			bargain = bookManage.isBargain(book.getBookId());
+			bargain = bookbargainservice.isBargain(book.getBookId());
 			if(bargain != null){
 				book.setBookPrice(bargain.getBookNewPrice());
 			}
@@ -47,6 +41,26 @@ public class SingleOrdersAction extends ActionSupport{
 		request.setAttribute("bookList", bookList);
 		request.setAttribute("orders", orders);
 		return null;
+	}
+
+
+	public ISingleOrderService getSingleorderservice() {
+		return singleorderservice;
+	}
+
+
+	public void setSingleorderservice(ISingleOrderService singleorderservice) {
+		this.singleorderservice = singleorderservice;
+	}
+
+
+	public IBookBargainService getBookbargainservice() {
+		return bookbargainservice;
+	}
+
+
+	public void setBookbargainservice(IBookBargainService bookbargainservice) {
+		this.bookbargainservice = bookbargainservice;
 	}
 
 }

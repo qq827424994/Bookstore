@@ -2,9 +2,11 @@ package action;
 
 import java.util.regex.Pattern;
 
+import service.IEnrollService;
+
 import com.opensymphony.xwork2.ActionSupport;
 
-import daoImp.PersonManage;
+
  
 import entity.*;
 
@@ -15,7 +17,7 @@ public class EnrollAction extends ActionSupport{
 	private String userPassword;
 	private String userRePassword;
 	private String userEmail;
-	private PersonManage personManage;
+	private IEnrollService enrollService;
 	public String getUserName() {
 		return userName;
 	}
@@ -40,18 +42,13 @@ public class EnrollAction extends ActionSupport{
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	public void setPersonManage(PersonManage personManage) {
-		this.personManage = personManage;
-	}
-	
+
 	public String execute(){
 		User newUser = new User();
 		newUser.setUserName(userName);
 		newUser.setUserPassword(userPassword);
 		newUser.setUserEmail(userEmail);
-		Sex sex = personManage.findSex(3);
-		newUser.setSex(sex);
-		personManage.addUser(newUser);
+		enrollService.enroll(newUser);
 		return "success";
 	}
 	public void validate(){
@@ -68,9 +65,15 @@ public class EnrollAction extends ActionSupport{
 			addFieldError("userEmail", "邮箱不能为空！");
 		}
 		boolean flag = true; 
-		flag = personManage.isUserNameExist(userName);
+		flag = enrollService.check(userName);
 		if(flag){
 			addFieldError("userName", "用户名已经存在！");
 		}
+	}
+	public IEnrollService getEnrollService() {
+		return enrollService;
+	}
+	public void setEnrollService(IEnrollService enrollService) {
+		this.enrollService = enrollService;
 	}
 }

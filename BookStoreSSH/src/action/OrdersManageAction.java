@@ -4,10 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
+
+import service.IOrderManageService;
+
 import com.opensymphony.xwork2.ActionSupport;
 
-import dao.*;
-import daoImp.OrdersManage;
 import entity.*;
 
 import java.sql.Timestamp;
@@ -17,13 +18,8 @@ import java.util.*;
 
 @SuppressWarnings("serial")
 public class OrdersManageAction extends ActionSupport{
+ private IOrderManageService ordermanageservice;
 
-	private OrdersManage ordersManage;
-	public void setOrdersManage(OrdersManage ordersManage) {
-		this.ordersManage = ordersManage;
-	}
-
-	@SuppressWarnings("unchecked")
 	public String execute(){
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -32,7 +28,8 @@ public class OrdersManageAction extends ActionSupport{
 		String updateType = request.getParameter("updateType");
 		if("add".equals(updateType)){
 			
-			List<Book> shoppingBook = (List)session.getAttribute("shoppingBook");
+			@SuppressWarnings("unchecked")
+			List<Book> shoppingBook = (List<Book>)session.getAttribute("shoppingBook");
 			double totalMoney = (Double)session.getAttribute("totalMoney");
 			User user = (User)session.getAttribute("loginUser");
 			Orders orders = new Orders();
@@ -47,14 +44,14 @@ public class OrdersManageAction extends ActionSupport{
 			ordersNumber +=  formatDate+random;
 			
 			orders.setOrdersNumber(ordersNumber);
-			int ordersId = ordersManage.addOrders(orders);
-			Orders newOrders = ordersManage.findOrders(ordersId);
+			int ordersId = ordermanageservice.addOrders(orders);
+			Orders newOrders = ordermanageservice.findOrders(ordersId);
 			for(Book book : shoppingBook){
 				Ordersbook ordersbook = new Ordersbook();
-				ordersbook.setBook(book);
 				ordersbook.setBookAmount(book.getBookAmount());
+				ordersbook.setBook(book);
 				ordersbook.setOrders(newOrders);
-				ordersManage.addOrdersbook(ordersbook);
+				ordermanageservice.addOrdersbook(ordersbook);
 			}
 			session.removeAttribute("shoppingBook");
 			session.removeAttribute("totalMoney");
@@ -63,7 +60,7 @@ public class OrdersManageAction extends ActionSupport{
 		if("delete".equals(updateType)){
 			String ordersId = request.getParameter("ordersId");
 			int i = 0;
-			i = ordersManage.deleteOrders(Integer.parseInt(ordersId));
+			i = ordermanageservice.deleteOrders(Integer.parseInt(ordersId));
 			if(i == 0){
 				return "error";
 			}else{
@@ -71,5 +68,13 @@ public class OrdersManageAction extends ActionSupport{
 			}
 		}
 		return null;
+	}
+
+	public IOrderManageService getOrdermanageservice() {
+		return ordermanageservice;
+	}
+
+	public void setOrdermanageservice(IOrderManageService ordermanageservice) {
+		this.ordermanageservice = ordermanageservice;
 	}
 }

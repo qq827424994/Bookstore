@@ -9,7 +9,8 @@ li{ list-style: none; }
 	background-color: white;
 }
 #logo{
-	float: left;
+	width: 900px;
+	float: none;
 	margin-top: 30px;
 	width: 200px;
 }
@@ -20,7 +21,7 @@ li{ list-style: none; }
 	text-align: right;
 }
 #searchBook{
-	text-align: right;
+	float: none;
 	padding-right: 20px;
 }
 #login,#enroll,#managerLogin,#personalInformation,#updatePassword{
@@ -75,11 +76,10 @@ ul.singleBookUl{
 }
 li.allBookHead,li.singleBookName,li.shoppingBookHead{
 	width: 700px;	
-	background-color: teal;
 	text-align: left;
 	padding: 5px;
 	font-weight: bold;
-	color:yellow;
+	color:black;
 	margin-bottom: 10px;
 }
 li.allBookPicture,li.singleBookPicture{
@@ -140,7 +140,6 @@ li.delete,li.deleteOrders,li.bookPress{
 }
 
 ul.shoppingBookUl,ul.singleOrders{
-	border: 1px solid teal;
 	width: 702px;
 }
 ul.shoppingBookUl li,ul.singleOrders{

@@ -9,7 +9,7 @@ li{ list-style: none; }
 	background-color: white;
 }
 #logo{
-	float: left;
+	float: none;
 	margin-top: 30px;
 	width: 200px;
 }
@@ -20,7 +20,7 @@ li{ list-style: none; }
 	text-align: right;
 }
 #welcome{
-	text-align: right;
+	float: none;
 	padding-right: 50px;
 }
 #login{
@@ -132,7 +132,7 @@ ul.manageBookUl,ul.singleBookUl,ul.allBookUl{
 }
 li.manageBookHead,li.singleBookName,li.allBookHead{
 	width: 700px;
-	background-color: rgb(23,157,244);
+	background-color: #FFF;
 	text-align: left;
 	padding-left: 10px;
 	padding-top: 5px;
@@ -140,7 +140,7 @@ li.manageBookHead,li.singleBookName,li.allBookHead{
 	font-weight: bold;
 }
 li.manageBookPicture,li.singleBookPicture,li.allBookPicture{
-	width: 140px;
+	width: 130px;
 	float: left;
 	margin-top: 10px;
 }
@@ -152,8 +152,8 @@ li.manageBookInfor,li.allBookInfor{
 	padding-left: 10px;
 }
 li.manageBookPicture img,li.singleBookPicture img,li.allBookPicture img{
-	width: 140px;
-	height: 104px;
+	width: 130px;
+	height: 90px;
 }
 li.singleBookInfor{
 	width: 560px;

@@ -7,10 +7,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.struts2.ServletActionContext;
 
+import service.IUserManageService;
+
 import com.opensymphony.xwork2.ActionSupport;
 
-import daoImp.PersonManage;
- 
 import entity.*;
 
 @SuppressWarnings("serial")
@@ -26,8 +26,8 @@ public class UserManageAction extends ActionSupport{
 	private String userPassword;
 	private String newUserPassword;
 	private String reNewUserPassword;
+	private IUserManageService usermanageservice;
 	
-	private PersonManage personManage;
 	public String getUserNickname() {
 		return userNickname;
 	}
@@ -64,9 +64,7 @@ public class UserManageAction extends ActionSupport{
 	public void setUserRemark(String userRemark) {
 		this.userRemark = userRemark;
 	}
-	public void setPersonManage(PersonManage personManage) {
-		this.personManage = personManage;
-	}
+	
 	public String getUserPassword() {
 		return userPassword;
 	}
@@ -95,14 +93,14 @@ public class UserManageAction extends ActionSupport{
 			page = "error";
 		}else{
 			user.setUserNickname(userNickname);
-			Sex sex = personManage.findSex(sexId);
+			Sex sex = usermanageservice.findSex(sexId);
 			user.setSex(sex);
 			user.setUserEmail(userEmail);
 			user.setUserPhone(userPhone);
 			user.setUserAddress(userAddress);
 			user.setUserRemark(userRemark);
 			int i = 0 ;
-			i = personManage.updateUserInfor(user);
+			i = usermanageservice.updateUserInfor(user);
 			if(i == 1){
 				page="success";
 				session.removeAttribute("loginUser");
@@ -126,7 +124,7 @@ public class UserManageAction extends ActionSupport{
 				if(newUserPassword.equals(reNewUserPassword)){
 					user.setUserPassword(newUserPassword);
 					int i = 0;
-					i = personManage.updateUserInfor(user);
+					i = usermanageservice.updateUserInfor(user);
 					if( i == 1){
 						page="success";
 						session.removeAttribute("loginUser");
@@ -139,5 +137,11 @@ public class UserManageAction extends ActionSupport{
 			}
 		}	
 		return page;
+	}
+	public IUserManageService getUsermanageservice() {
+		return usermanageservice;
+	}
+	public void setUsermanageservice(IUserManageService usermanageservice) {
+		this.usermanageservice = usermanageservice;
 	}
 }

@@ -7,9 +7,9 @@ import java.util.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
-import com.opensymphony.xwork2.ActionSupport;
+import service.IUpdateBookService;
 
-import daoImp.BookManage;
+import com.opensymphony.xwork2.ActionSupport;
 
 import entity.*;
 
@@ -24,8 +24,7 @@ public class UpdateBookAction extends ActionSupport {
 	private int typeId;
 	private int bookAmount;
 	private double bookPrice;
-	private BookManage bookManage;
-
+	private IUpdateBookService updatebookservice;
 	private File doc;
 	private String fileName;
 	private String contentType;
@@ -140,15 +139,21 @@ public class UpdateBookAction extends ActionSupport {
 	public void setBookPrice(double bookPrice) {
 		this.bookPrice = bookPrice;
 	}
-
-	public void setBookManage(BookManage bookManage) {
-		this.bookManage = bookManage;
+	public IUpdateBookService getUpdatebookservice() {
+		return updatebookservice;
 	}
+
+	public void setUpdatebookservice(IUpdateBookService updatebookservice) {
+		this.updatebookservice = updatebookservice;
+	}
+
+
+	
 
 	@SuppressWarnings("deprecation")
 	public String execute() {
 		System.out.println(bookId);
-		Book book = bookManage.findBook(bookId);
+		Book book = updatebookservice.findBook(bookId);
 		System.out.println(book);
 		if (doc != null) {
 			System.out.println("asd");
@@ -172,9 +177,11 @@ public class UpdateBookAction extends ActionSupport {
 		book.setBookRemark(bookRemark);
 		book.setBookPrice(bookPrice);
 		book.setBookAmount(bookAmount);
-		Type type = bookManage.findType(typeId);
+		Type type = updatebookservice.findType(typeId);
 		book.setType(type);// Àà±ð
-		bookManage.updateBook(book);
+		updatebookservice.updateBook(book);
 		return SUCCESS;
 	}
+
+
 }
